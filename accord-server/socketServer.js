@@ -23,5 +23,14 @@ io.on("connection", (socket) => {
 namespaces.forEach((namespace) => {
   io.of(namespace.endpoint).on("connection", (nsSocket) => {
     nsSocket.emit("namespaceRoomLoad", namespace.rooms);
+
+    nsSocket.on("joinRoom", (roomToJoin) => {
+      // room[0] is the socket's own room
+      const roomToLeave = Array.from(nsSocket.rooms)[1];
+      nsSocket.leave(roomToLeave);
+
+      nsSocket.join(roomToJoin);
+      console.log(`${nsSocket.id} joined ${roomToJoin}`);
+    });
   });
 });

@@ -3,11 +3,12 @@ import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import TagIcon from "@mui/icons-material/Tag";
 import { useSelector, useDispatch } from "react-redux";
-import { setChannelData } from "../features/appSlice";
+import { setChannelData, joinAChannel } from "../features/appSlice";
 
 function ChannelsBar() {
-  const nsSocket = useSelector((state) => state.app.nsSocket);
-  const channels = useSelector((state) => state.app.channels);
+  const { nsSocket, channels, currentChannel } = useSelector(
+    (state) => state.app
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,11 +27,16 @@ function ChannelsBar() {
       sx={{ height: "100%", background: "#3a3c3d", color: "#ccc" }}
     >
       <Typography variant="h5" component="h1" sx={{ color: "#eee" }}>
-        Room
+        {currentChannel}
       </Typography>
 
       {channels.map((room, i) => (
-        <Stack key={i} direction="row" alignItems="center">
+        <Stack
+          key={i}
+          direction="row"
+          alignItems="center"
+          onClick={() => dispatch(joinAChannel(room.roomTitle))}
+        >
           <TagIcon />
           <Typography variant="subtitle1" component="h3">
             {room.roomTitle}

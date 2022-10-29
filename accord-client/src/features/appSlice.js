@@ -4,6 +4,7 @@ import io from "socket.io-client";
 const initialState = {
   endpoints: [],
   channels: [],
+  currentChannel: "General",
   nsSocket: io.connect("http://localhost:8000/csgo"),
 };
 
@@ -21,10 +22,14 @@ export const appSlice = createSlice({
       if (state.nsSocket) state.nsSocket.close();
       state.nsSocket = io.connect(`http://localhost:8000${action.payload}`);
     },
+    joinAChannel: (state, action) => {
+      state.nsSocket.emit("joinRoom", action.payload);
+      state.currentChannel = action.payload;
+    },
   },
 });
 
-export const { setEndpoints, setChannelData, connectToServer } =
+export const { setEndpoints, setChannelData, connectToServer, joinAChannel } =
   appSlice.actions;
 
 export default appSlice.reducer;
