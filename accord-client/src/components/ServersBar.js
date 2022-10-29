@@ -21,7 +21,8 @@ function ServersBar() {
     <Grid
       container
       direction="column"
-      padding={2}
+      alignItems="center"
+      paddingY={2}
       gap={1}
       sx={{ height: "100%", background: "#292b2c" }}
     >

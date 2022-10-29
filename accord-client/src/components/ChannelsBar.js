@@ -15,9 +15,9 @@ function ChannelsBar() {
       container
       direction="column"
       padding={2}
-      sx={{ height: "100%", background: "#3a3c3d" }}
+      sx={{ height: "100%", background: "#3a3c3d", color: "#ccc" }}
     >
-      <Typography variant="h5" component="h1">
+      <Typography variant="h5" component="h1" sx={{ color: "#eee" }}>
         Room
       </Typography>
 

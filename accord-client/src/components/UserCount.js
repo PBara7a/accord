@@ -1,12 +1,16 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
 function UserCount() {
   return (
-    <Grid container alignItems="center">
+    <Typography
+      variant="body1"
+      component="p"
+      sx={{ display: "flex", alignItems: "center", color: "#999" }}
+    >
       1
       <PersonIcon />
-    </Grid>
+    </Typography>
   );
 }
 

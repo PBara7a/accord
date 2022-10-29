@@ -4,7 +4,7 @@ import UserCount from "./UserCount";
 
 function ChatHeader() {
   return (
-    <Grid container alignItems="center" gap={2}>
+    <Grid container alignItems="center" gap={2} sx={{ color: "#eee" }}>
       <Grid item>
         <Typography variant="h5" component="h2">
           New Articles
