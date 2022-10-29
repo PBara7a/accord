@@ -20,10 +20,11 @@ const messages = [
 function Chat() {
   return (
     <List sx={{ flex: 1 }}>
-      {messages.map((msg) => {
+      {messages.map((msg, i) => {
         const { avatar, username, time, text } = msg;
         return (
           <Message
+            key={i}
             avatar={avatar}
             username={username}
             time={time}

@@ -21,8 +21,8 @@ function ChannelsBar() {
         Room
       </Typography>
 
-      {rooms.map((room) => (
-        <Stack direction="row" alignItems="center">
+      {rooms.map((room, i) => (
+        <Stack key={i} direction="row" alignItems="center">
           <TagIcon />
           <Typography variant="subtitle1" component="h3">
             {room.roomTitle}
