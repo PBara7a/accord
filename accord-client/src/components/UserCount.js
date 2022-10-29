@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
 function UserCount() {
