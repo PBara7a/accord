@@ -4,10 +4,12 @@ class Namespace {
     this.nsTitle = nsTitle;
     this.img = img;
     this.endpoint = endpoint;
-    this.rooms = rooms;
+    this.rooms = [];
   }
 
   addRoom(roomObj) {
     this.rooms.push(roomObj);
   }
 }
+
+module.exports = Namespace;
