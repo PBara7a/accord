@@ -23,7 +23,7 @@ function ServersBar() {
       direction="column"
       padding={2}
       gap={1}
-      sx={{ background: "#292b2c" }}
+      sx={{ height: "100%", background: "#292b2c" }}
     >
       {servers.map((server, i) => (
         <Avatar
