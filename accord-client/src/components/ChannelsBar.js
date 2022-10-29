@@ -1,23 +1,12 @@
-import { useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import TagIcon from "@mui/icons-material/Tag";
-import { useSelector, useDispatch } from "react-redux";
-import { setChannelData, joinAChannel } from "../features/appSlice";
+import { useSelector } from "react-redux";
+import { useWebsocket } from "../contexts/SocketManager";
 
 function ChannelsBar() {
-  const { nsSocket, channels, currentChannel } = useSelector(
-    (state) => state.app
-  );
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (nsSocket) {
-      nsSocket.on("namespaceRoomLoad", (nsRooms) => {
-        dispatch(setChannelData(nsRooms));
-      });
-    }
-  }, [dispatch, nsSocket]);
+  const { channels, currentChannel } = useSelector((state) => state.app);
+  const { joinChannel } = useWebsocket();
 
   return (
     <Grid
@@ -35,7 +24,7 @@ function ChannelsBar() {
           key={i}
           direction="row"
           alignItems="center"
-          onClick={() => dispatch(joinAChannel(room.roomTitle))}
+          onClick={() => joinChannel(room.roomTitle)}
         >
           <TagIcon />
           <Typography variant="subtitle1" component="h3">
