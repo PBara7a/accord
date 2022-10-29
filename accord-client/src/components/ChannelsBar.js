@@ -1,15 +1,23 @@
+import { useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import TagIcon from "@mui/icons-material/Tag";
-
-// Placeholder
-const rooms = [
-  { roomTitle: "General" },
-  { roomTitle: "One" },
-  { roomTitle: "Two" },
-];
+import { useSelector, useDispatch } from "react-redux";
+import { setChannelData } from "../features/appSlice";
 
 function ChannelsBar() {
+  const nsSocket = useSelector((state) => state.app.nsSocket);
+  const channels = useSelector((state) => state.app.channels);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (nsSocket) {
+      nsSocket.on("namespaceRoomLoad", (nsRooms) => {
+        dispatch(setChannelData(nsRooms));
+      });
+    }
+  }, [dispatch, nsSocket]);
+
   return (
     <Grid
       container
@@ -21,7 +29,7 @@ function ChannelsBar() {
         Room
       </Typography>
 
-      {rooms.map((room, i) => (
+      {channels.map((room, i) => (
         <Stack key={i} direction="row" alignItems="center">
           <TagIcon />
           <Typography variant="subtitle1" component="h3">

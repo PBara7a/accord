@@ -19,3 +19,9 @@ io.on("connection", (socket) => {
 
   socket.emit("namespacesList", nsData);
 });
+
+namespaces.forEach((namespace) => {
+  io.of(namespace.endpoint).on("connection", (nsSocket) => {
+    nsSocket.emit("namespaceRoomLoad", namespace.rooms);
+  });
+});
