@@ -1,4 +1,5 @@
 import { Grid, Typography } from "@mui/material";
+import SearchBar from "./SearchBar";
 import UserCount from "./UserCount";
 
 function ChatHeader() {
@@ -12,6 +13,10 @@ function ChatHeader() {
 
       <Grid item>
         <UserCount />
+      </Grid>
+
+      <Grid item marginLeft="auto">
+        <SearchBar />
       </Grid>
     </Grid>
   );
