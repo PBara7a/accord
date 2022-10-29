@@ -1,6 +1,9 @@
 import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import TagIcon from "@mui/icons-material/Tag";
+import socket from "../utilities/socketClient";
+
+socket.on("test", (data) => console.log(data));
 
 // Placeholder
 const rooms = [
