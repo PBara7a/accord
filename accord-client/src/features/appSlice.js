@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   servers: [],
   channels: [],
+  currentServer: "CS:GO",
   currentChannel: "General",
 };
 
@@ -16,12 +17,16 @@ export const appSlice = createSlice({
     setChannels: (state, action) => {
       state.channels = action.payload;
     },
+    setCurrentServer: (state, action) => {
+      state.currentServer = action.payload;
+    },
     setCurrentChannel: (state, action) => {
       state.currentChannel = action.payload;
     },
   },
 });
 
-export const { setServers, setChannels, setCurrentChannel } = appSlice.actions;
+export const { setServers, setChannels, setCurrentServer, setCurrentChannel } =
+  appSlice.actions;
 
 export default appSlice.reducer;

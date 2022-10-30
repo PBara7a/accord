@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   setServers,
   setChannels,
+  setCurrentServer,
   setCurrentChannel,
 } from "../features/appSlice";
 import io from "socket.io-client";
@@ -25,8 +26,9 @@ export function SocketManager({ children }) {
   }, [socket, dispatch]);
 
   useEffect(() => {
-    nsSocket.on("namespaceRoomLoad", (nsRooms) => {
-      dispatch(setChannels(nsRooms));
+    nsSocket.on("namespaceData", (nsData) => {
+      dispatch(setChannels(nsData.rooms));
+      dispatch(setCurrentServer(nsData.title));
     });
   }, [nsSocket, dispatch]);
 

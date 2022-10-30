@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useWebsocket } from "../contexts/SocketManager";
 
 function ChannelsBar() {
-  const { channels, currentChannel } = useSelector((state) => state.app);
+  const { channels, currentServer } = useSelector((state) => state.app);
   const { joinChannel } = useWebsocket();
 
   return (
@@ -16,7 +16,7 @@ function ChannelsBar() {
       sx={{ height: "100%", background: "#3a3c3d", color: "#ccc" }}
     >
       <Typography variant="h5" component="h1" sx={{ color: "#eee" }}>
-        {currentChannel}
+        {currentServer}
       </Typography>
 
       {channels.map((room, i) => (
