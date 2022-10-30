@@ -1,5 +1,6 @@
 import { List } from "@mui/material";
 import Message from "./Message";
+import { useSelector } from "react-redux";
 
 // Placeholder
 const messages = [
@@ -18,6 +19,8 @@ const messages = [
 ];
 
 function Chat() {
+  const { messages } = useSelector((state) => state.app);
+  console.log(messages);
   return (
     <List sx={{ flex: 1 }}>
       {messages.map((msg, i) => {

@@ -3,10 +3,18 @@ import { Stack } from "@mui/system";
 import TagIcon from "@mui/icons-material/Tag";
 import { useSelector } from "react-redux";
 import { useWebsocket } from "../contexts/SocketManager";
+import { useDispatch } from "react-redux";
+import { setCurrentChannel } from "../features/appSlice";
 
 function ChannelsBar() {
   const { channels, currentServer } = useSelector((state) => state.app);
-  const { joinChannel } = useWebsocket();
+  const { nsSocket } = useWebsocket();
+  const dispatch = useDispatch();
+
+  const joinChannel = (endpoint) => {
+    nsSocket.emit("joinRoom", endpoint);
+    dispatch(setCurrentChannel(endpoint));
+  };
 
   return (
     <Grid

@@ -4,7 +4,7 @@ import {
   setServers,
   setChannels,
   setCurrentServer,
-  setCurrentChannel,
+  sendMessage,
 } from "../features/appSlice";
 import io from "socket.io-client";
 
@@ -30,6 +30,10 @@ export function SocketManager({ children }) {
       dispatch(setChannels(nsData.rooms));
       dispatch(setCurrentServer(nsData.title));
     });
+
+    nsSocket.on("messageToClients", (msg) => {
+      dispatch(sendMessage(msg));
+    });
   }, [nsSocket, dispatch]);
 
   const updateSocket = (endpoint) => {
@@ -37,16 +41,10 @@ export function SocketManager({ children }) {
     setNsSocket(io.connect(host + endpoint));
   };
 
-  const joinChannel = (endpoint) => {
-    nsSocket.emit("joinRoom", endpoint);
-    dispatch(setCurrentChannel(endpoint));
-  };
-
   const value = {
     socket,
     nsSocket,
     updateSocket,
-    joinChannel,
   };
 
   return (

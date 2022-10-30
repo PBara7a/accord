@@ -35,5 +35,24 @@ namespaces.forEach((namespace) => {
       nsSocket.join(roomToJoin);
       console.log(`${nsSocket.id} joined ${roomToJoin}`);
     });
+
+    nsSocket.on("newMessageToServer", (msg) => {
+      const fullMsg = {
+        text: msg.text,
+        time: Date.now(),
+        username: "pbara7a",
+        avatar: "https://www.fillmurray.com/30/30",
+      };
+
+      const roomTitle = Array.from(nsSocket.rooms)[1];
+
+      // find the correct room and send msg
+      const nsRoom = namespace.rooms.find(
+        (room) => room.roomTitle === roomTitle
+      );
+      nsRoom.addMessage(fullMsg);
+
+      io.of(namespace.endpoint).to(roomTitle).emit("messageToClients", fullMsg);
+    });
   });
 });
