@@ -4,6 +4,8 @@ import {
   setServers,
   setChannels,
   setCurrentServer,
+  setCurrentChannel,
+  setMessages,
   sendMessage,
 } from "../features/appSlice";
 import io from "socket.io-client";
@@ -26,6 +28,8 @@ export function SocketManager({ children }) {
   }, [socket, dispatch]);
 
   useEffect(() => {
+    nsSocket.emit("joinRoom", "General");
+
     nsSocket.on("namespaceData", (nsData) => {
       dispatch(setChannels(nsData.rooms));
       dispatch(setCurrentServer(nsData.title));
@@ -33,6 +37,12 @@ export function SocketManager({ children }) {
 
     nsSocket.on("messageToClients", (msg) => {
       dispatch(sendMessage(msg));
+    });
+
+    nsSocket.on("roomData", ({ title, messages }) => {
+      dispatch(setMessages(messages));
+      dispatch(setCurrentChannel(title));
+      // scroll to the last message sent
     });
   }, [nsSocket, dispatch]);
 

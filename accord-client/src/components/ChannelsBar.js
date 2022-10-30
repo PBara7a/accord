@@ -11,9 +11,9 @@ function ChannelsBar() {
   const { nsSocket } = useWebsocket();
   const dispatch = useDispatch();
 
-  const joinChannel = (endpoint) => {
-    nsSocket.emit("joinRoom", endpoint);
-    dispatch(setCurrentChannel(endpoint));
+  const joinChannel = (channel) => {
+    nsSocket.emit("joinRoom", channel);
+    dispatch(setCurrentChannel(channel));
   };
 
   return (

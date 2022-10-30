@@ -33,7 +33,17 @@ namespaces.forEach((namespace) => {
       nsSocket.leave(roomToLeave);
 
       nsSocket.join(roomToJoin);
+
       console.log(`${nsSocket.id} joined ${roomToJoin}`);
+
+      const nsRoom = namespace.rooms.find(
+        (room) => room.roomTitle === roomToJoin
+      );
+
+      nsSocket.emit("roomData", {
+        title: nsRoom.roomTitle,
+        messages: nsRoom.history,
+      });
     });
 
     nsSocket.on("newMessageToServer", (msg) => {
