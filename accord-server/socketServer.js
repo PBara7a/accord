@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const socketio = require("socket.io");
 const namespaces = require("./data/seed");
+const updateUsersInRoom = require("./utilities/updateUsersInRoom");
 
 const expressServer = app.listen(8000);
 const io = socketio(expressServer);
@@ -31,6 +32,7 @@ namespaces.forEach((namespace) => {
       // room[0] is the socket's own room
       const roomToLeave = Array.from(nsSocket.rooms)[1];
       nsSocket.leave(roomToLeave);
+      updateUsersInRoom(io, namespace, roomToLeave);
 
       nsSocket.join(roomToJoin);
 
@@ -44,6 +46,8 @@ namespaces.forEach((namespace) => {
         title: nsRoom.roomTitle,
         messages: nsRoom.history,
       });
+
+      updateUsersInRoom(io, namespace, roomToJoin);
     });
 
     nsSocket.on("newMessageToServer", (msg) => {

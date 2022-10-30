@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
   setServers,
@@ -7,6 +7,7 @@ import {
   setCurrentChannel,
   setMessages,
   sendMessage,
+  setMembersInChannel,
 } from "../features/appSlice";
 import io from "socket.io-client";
 
@@ -20,6 +21,7 @@ export function SocketManager({ children }) {
   const [socket] = useState(io.connect(host));
   const [nsSocket, setNsSocket] = useState(io.connect(host + "/csgo"));
   const dispatch = useDispatch();
+  const effectRan = useRef(false);
 
   useEffect(() => {
     socket.on("namespacesList", (data) => {
@@ -28,22 +30,31 @@ export function SocketManager({ children }) {
   }, [socket, dispatch]);
 
   useEffect(() => {
-    nsSocket.emit("joinRoom", "General");
+    // workaround strict mode firing this twice
+    if (!effectRan.current) {
+      nsSocket.emit("joinRoom", "General");
 
-    nsSocket.on("namespaceData", (nsData) => {
-      dispatch(setChannels(nsData.rooms));
-      dispatch(setCurrentServer(nsData.title));
-    });
+      nsSocket.on("namespaceData", (nsData) => {
+        dispatch(setChannels(nsData.rooms));
+        dispatch(setCurrentServer(nsData.title));
+      });
 
-    nsSocket.on("messageToClients", (msg) => {
-      dispatch(sendMessage(msg));
-    });
+      nsSocket.on("messageToClients", (msg) => {
+        console.log("The message was received");
+        dispatch(sendMessage(msg));
+      });
 
-    nsSocket.on("roomData", ({ title, messages }) => {
-      dispatch(setMessages(messages));
-      dispatch(setCurrentChannel(title));
-      // scroll to the last message sent
-    });
+      nsSocket.on("roomData", ({ title, messages }) => {
+        dispatch(setMessages(messages));
+        dispatch(setCurrentChannel(title));
+      });
+
+      nsSocket.on("updateMembers", (numberOfMembers) => {
+        dispatch(setMembersInChannel(numberOfMembers));
+      });
+
+      return () => (effectRan.current = true);
+    }
   }, [nsSocket, dispatch]);
 
   const updateSocket = (endpoint) => {
