@@ -3,11 +3,15 @@ import Message from "./Message";
 import { useSelector } from "react-redux";
 
 function Chat() {
-  const { messages } = useSelector((state) => state.app);
+  const { messages, searchString } = useSelector((state) => state.app);
+
+  const messagesToRender = messages.filter((msg) =>
+    msg.text.toLowerCase().includes(searchString.toLowerCase())
+  );
 
   return (
     <List sx={{ flex: 1 }}>
-      {messages.map((msg, i) => {
+      {messagesToRender.map((msg, i) => {
         const { avatar, username, time, text } = msg;
         return (
           <Message

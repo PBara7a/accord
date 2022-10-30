@@ -7,6 +7,7 @@ const initialState = {
   currentServer: "CS:GO",
   currentChannel: "General",
   membersInChannel: 1,
+  searchString: "",
 };
 
 export const appSlice = createSlice({
@@ -34,6 +35,9 @@ export const appSlice = createSlice({
     sendMessage: (state, action) => {
       state.messages.push(action.payload);
     },
+    setSearchString: (state, action) => {
+      state.searchString = action.payload;
+    },
   },
 });
 
@@ -45,6 +49,7 @@ export const {
   setCurrentChannel,
   setMembersInChannel,
   sendMessage,
+  setSearchString,
 } = appSlice.actions;
 
 export default appSlice.reducer;

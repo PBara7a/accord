@@ -1,9 +1,8 @@
 import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import TagIcon from "@mui/icons-material/Tag";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useWebsocket } from "../contexts/SocketManager";
-import { useDispatch } from "react-redux";
 import { setCurrentChannel } from "../features/appSlice";
 
 function ChannelsBar() {
