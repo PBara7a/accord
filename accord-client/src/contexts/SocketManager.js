@@ -30,27 +30,29 @@ export function SocketManager({ children }) {
   }, [socket, dispatch]);
 
   useEffect(() => {
+    nsSocket.emit("joinRoom", "General");
+
+    nsSocket.on("namespaceData", (nsData) => {
+      dispatch(setChannels(nsData.rooms));
+      dispatch(setCurrentServer(nsData.title));
+
+      // workaround strict mode, making sure the messageToClient listener is set when we join a namespace
+      effectRan.current = false;
+    });
+
+    nsSocket.on("roomData", ({ title, messages }) => {
+      dispatch(setMessages(messages));
+      dispatch(setCurrentChannel(title));
+    });
+
+    nsSocket.on("updateMembers", (numberOfMembers) => {
+      dispatch(setMembersInChannel(numberOfMembers));
+    });
+
     // workaround strict mode firing this twice
     if (!effectRan.current) {
-      nsSocket.emit("joinRoom", "General");
-
-      nsSocket.on("namespaceData", (nsData) => {
-        dispatch(setChannels(nsData.rooms));
-        dispatch(setCurrentServer(nsData.title));
-      });
-
       nsSocket.on("messageToClients", (msg) => {
-        console.log("The message was received");
         dispatch(sendMessage(msg));
-      });
-
-      nsSocket.on("roomData", ({ title, messages }) => {
-        dispatch(setMessages(messages));
-        dispatch(setCurrentChannel(title));
-      });
-
-      nsSocket.on("updateMembers", (numberOfMembers) => {
-        dispatch(setMembersInChannel(numberOfMembers));
       });
 
       return () => (effectRan.current = true);

@@ -13,7 +13,6 @@ function MessageInput() {
   const handleSubmit = (e) => {
     e.preventDefault();
     sendMessageToServer(message);
-    console.log(`${message} - was just sent`);
     setMessage("");
   };
 
