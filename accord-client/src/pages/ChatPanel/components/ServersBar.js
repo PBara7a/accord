@@ -20,7 +20,7 @@ function ServersBar() {
           key={i}
           alt={server.namespaceTitle}
           src={server.img}
-          sx={{ width: 48, height: 48 }}
+          sx={{ width: 48, height: 48, cursor: "pointer" }}
           onClick={() => updateSocket(server.endpoint)}
         />
       ))}

@@ -4,6 +4,7 @@ import TagIcon from "@mui/icons-material/Tag";
 import { useSelector, useDispatch } from "react-redux";
 import { useWebsocket } from "../../../contexts/SocketManager";
 import { setCurrentChannel } from "../../../features/appSlice";
+import LoggedInUser from "./LoggedInUser";
 
 function ChannelsBar() {
   const { channels, currentServer } = useSelector((state) => state.app);
@@ -19,26 +20,33 @@ function ChannelsBar() {
     <Grid
       container
       direction="column"
-      padding={2}
+      justifyContent="space-between"
       sx={{ height: "100%", background: "#3a3c3d", color: "#ccc" }}
     >
-      <Typography variant="h5" component="h1" sx={{ color: "#eee" }}>
-        {currentServer}
-      </Typography>
+      <Grid item padding={2}>
+        <Typography variant="h5" component="h1" sx={{ color: "#eee" }}>
+          {currentServer}
+        </Typography>
 
-      {channels.map((room, i) => (
-        <Stack
-          key={i}
-          direction="row"
-          alignItems="center"
-          onClick={() => joinChannel(room.roomTitle)}
-        >
-          <TagIcon />
-          <Typography variant="subtitle1" component="h3">
-            {room.roomTitle}
-          </Typography>
-        </Stack>
-      ))}
+        {channels.map((room, i) => (
+          <Stack
+            key={i}
+            direction="row"
+            alignItems="center"
+            onClick={() => joinChannel(room.roomTitle)}
+            sx={{ cursor: "pointer" }}
+          >
+            <TagIcon />
+            <Typography variant="subtitle1" component="h3">
+              {room.roomTitle}
+            </Typography>
+          </Stack>
+        ))}
+      </Grid>
+
+      <Grid item>
+        <LoggedInUser />
+      </Grid>
     </Grid>
   );
 }

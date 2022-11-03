@@ -17,6 +17,7 @@ Repetition is key to learning, so I am building my second messaging app
 
 The teck stack for this build is: React, Redux, Node, Express, Socket.io, Passport, MongoDB, Material UI
 
+- Login with Google Identity Services
 - Login with Passport.js (TODO)
 - Users can connect to different namespaces (discord servers) and join rooms (discord channels)
 - Messages are sent and received in real-time
@@ -28,6 +29,7 @@ The teck stack for this build is: React, Redux, Node, Express, Socket.io, Passpo
 
 - Gain a better understanding of Socket.io: introduction to namespaces
 - Implement authentication using Passport strategies
+- Implement authentication using Google Identity Services
 - Basics of Redux: first introduction
 - Store data in a non-relational database, I'll use MongoDB. So far I have been using Prisma/PostgreSQL for all my projects with a DB requirement, I want to see what are the main differences
 
@@ -48,13 +50,15 @@ The teck stack for this build is: React, Redux, Node, Express, Socket.io, Passpo
 - FE/BE: Started sending the room history when a user joins a room, this was we have access to the messages sent before joining
 - FE/BE: The user count in each channel is updated every time a user enters or leaves the channel
 - FE: Added the functionality to filter messages by its text
+- FE/BE: User can login with their google account. Replaced hardcoded username and avatar
 
 <a id="next-steps"></a>
 
 ## 4. Next Steps
 
-- Learn how to use Passport and implement authentication. Currently working with hardcoded username and avatar
+- Learn how to use Passport to implement authentication. Currently with a single login option
 - Connect to a MongoDB and store messages permanently. Currently they are stored in memory only: the history property of Room classes and Redux
+- User added servers/channels
 - Improve the looks of the app (not a priority)
 - Add voice channels
 - Integrate with Tenor API, to allow users to share some GIFs
