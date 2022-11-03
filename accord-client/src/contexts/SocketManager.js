@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import {
   setServers,
   setChannels,
@@ -21,16 +20,8 @@ export const useWebsocket = () => useContext(SocketContext);
 export function SocketManager({ children }) {
   const [socket] = useState(io.connect(host));
   const [nsSocket, setNsSocket] = useState(io.connect(host + "/csgo"));
-  const { user, isLoggedIn } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
   const effectRan = useRef(false);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      nsSocket.emit("userLoggedIn", user);
-    }
-  }, [user]);
 
   useEffect(() => {
     socket.on("namespacesList", (data) => {
