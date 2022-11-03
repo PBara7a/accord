@@ -7,6 +7,8 @@ const updateUsersInRoom = require("./utilities/updateUsersInRoom");
 const expressServer = app.listen(8000);
 const io = socketio(expressServer, { cors: { origin: "*" } });
 
+let user;
+
 io.on("connection", (socket) => {
   console.log(`${socket.id} has just connected`);
 
@@ -23,6 +25,10 @@ io.on("connection", (socket) => {
 
 namespaces.forEach((namespace) => {
   io.of(namespace.endpoint).on("connection", (nsSocket) => {
+    nsSocket.on("userLoggedIn", (loggedInUser) => {
+      user = loggedInUser;
+    });
+
     nsSocket.emit("namespaceData", {
       title: namespace.nsTitle,
       rooms: namespace.rooms,
@@ -54,8 +60,8 @@ namespaces.forEach((namespace) => {
       const fullMsg = {
         text: msg.text,
         time: Date.now(),
-        username: "pbara7a",
-        avatar: "https://www.fillmurray.com/30/30",
+        username: user.username,
+        avatar: user.avatar,
       };
 
       const roomTitle = Array.from(nsSocket.rooms)[1];
