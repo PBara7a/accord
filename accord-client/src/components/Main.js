@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import Chat from "./Chat";
+import MessagesBoard from "./MessagesBoard";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 
@@ -13,7 +13,7 @@ function Main() {
       sx={{ background: "#4e4e4e" }}
     >
       <ChatHeader />
-      <Chat />
+      <MessagesBoard />
       <MessageInput />
     </Grid>
   );

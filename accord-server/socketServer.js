@@ -5,7 +5,7 @@ const namespaces = require("./data/seed");
 const updateUsersInRoom = require("./utilities/updateUsersInRoom");
 
 const expressServer = app.listen(8000);
-const io = socketio(expressServer);
+const io = socketio(expressServer, { cors: { origin: "*" } });
 
 io.on("connection", (socket) => {
   console.log(`${socket.id} has just connected`);
