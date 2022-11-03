@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
-import ChannelsBar from "./ChannelsBar";
-import Main from "./Main";
-import ServersBar from "./ServersBar";
+import ChannelsBar from "./components/ChannelsBar";
+import Main from "./components/Main";
+import ServersBar from "./components/ServersBar";
 
 function ChatPanel() {
   return (

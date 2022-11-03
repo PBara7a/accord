@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Paper, InputBase } from "@mui/material";
-import { useWebsocket } from "../contexts/SocketManager";
+import { useWebsocket } from "../../../contexts/SocketManager";
 
 function MessageInput() {
   const [message, setMessage] = useState("");

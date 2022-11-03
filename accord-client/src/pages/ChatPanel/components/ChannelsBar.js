@@ -2,8 +2,8 @@ import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import TagIcon from "@mui/icons-material/Tag";
 import { useSelector, useDispatch } from "react-redux";
-import { useWebsocket } from "../contexts/SocketManager";
-import { setCurrentChannel } from "../features/appSlice";
+import { useWebsocket } from "../../../contexts/SocketManager";
+import { setCurrentChannel } from "../../../features/appSlice";
 
 function ChannelsBar() {
   const { channels, currentServer } = useSelector((state) => state.app);

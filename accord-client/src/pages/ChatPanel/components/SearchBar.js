@@ -1,7 +1,7 @@
 import { Paper, InputBase, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearchString } from "../features/appSlice";
+import { setSearchString } from "../../../features/appSlice";
 
 function SearchBar() {
   const { searchString } = useSelector((state) => state.app);

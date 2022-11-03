@@ -1,6 +1,6 @@
 import { Grid, Avatar } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useWebsocket } from "../contexts/SocketManager";
+import { useWebsocket } from "../../../contexts/SocketManager";
 
 function ServersBar() {
   const servers = useSelector((state) => state.app.servers);
