@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { auth } from "../configs/firebaseConfig";
+import { signOut } from "firebase/auth";
 
 const initialState = {
   user: {},
-  isLoggedIn: false,
+  isLoggedIn: null,
 };
 
 export const userSlice = createSlice({
@@ -14,6 +16,7 @@ export const userSlice = createSlice({
       state.isLoggedIn = true;
     },
     userLogout: (state) => {
+      signOut(auth);
       state.user = {};
       state.isLoggedIn = false;
     },

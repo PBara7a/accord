@@ -1,46 +1,40 @@
-import { useEffect } from "react";
-import jwt_decode from "jwt-decode";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { useSelector, useDispatch } from "react-redux";
+import { Avatar, Box, Typography, Container, Button } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { userLogin } from "../../features/userSlice";
 import { useNavigate } from "react-router-dom";
+import {
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "../../configs/firebaseConfig";
 
 function LoginPage() {
-  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "631714661832-6kualj6mchp038nf3n49i76dqemfmoa6.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
+  const login = async (method) => {
+    let result;
 
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outlined",
-      size: "large",
-      text: "Continue with Google",
-      width: "400",
-    });
+    try {
+      if (method === "Google") {
+        result = await signInWithPopup(auth, new GoogleAuthProvider());
+      } else if (method === "GitHub") {
+        result = await signInWithPopup(auth, new GithubAuthProvider());
+      }
 
-    function handleCallbackResponse(response) {
-      const userObject = jwt_decode(response.credential);
-
-      const createdUser = {
-        email: userObject.email,
-        username: userObject.name,
-        avatar: userObject.picture,
+      const user = {
+        username: result.user.displayName,
+        avatar: result.user.photoURL,
       };
 
-      dispatch(userLogin(createdUser));
+      dispatch(userLogin(user));
       navigate("../", { replace: true });
+    } catch (err) {
+      console.error(err.message);
+      console.log(err.code);
     }
-  }, []);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,7 +53,17 @@ function LoginPage() {
           Sign in
         </Typography>
 
-        <div id="signInDiv"></div>
+        <Button
+          fullWidth
+          variant="outlined"
+          sx={{ marginBottom: "8px" }}
+          onClick={() => login("Google")}
+        >
+          Continue with Google
+        </Button>
+        <Button fullWidth variant="outlined" onClick={() => login("GitHub")}>
+          Continue with GitHub
+        </Button>
       </Box>
     </Container>
   );
